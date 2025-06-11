@@ -147,8 +147,8 @@ if(Xdata.getNumberOfNodes()-1>Xdata.SoilNode ) /// snow on the ground
 				{	
 					q_swr[cI]=0.0; /// we should check it later
 					Ti[cI] =Te; /// problematic: if we consider it, it means we should not consider shortwave absorption in OF, and this is fine just when we have melting-refreezing but not when we do not have melting refreezing...
-								   /// one solution is to set Ti=0 and q_swr=0 for elements which have both water and ice together.
-								   /// The second solution is not to set Ti=0 and q_swr=0 but limit the ice temperature to be always less than melting temperature...
+								   /// one solution is to set Ti=Te=melting_temp and q_swr=0 for elements which have both water and ice together.
+								   /// The second solution is not to set Ti=Te=melting_temp and q_swr=0 but limit the ice temperature to be always less than melting temperature...
 					///Tg[cI] =Te; // not needed at all.
 				}
 				//
