@@ -1,0 +1,31 @@
+\form#0:\[ P = P_0 \cdot {\left( 1 - \frac{L \cdot R_0 \cdot h}{T_0 ( R_0 + h )} \right)}^{\frac{g}{L R}} \]
+\form#1:\[ P_0 = \frac{P}{(1-\frac{Lh}{T_0})^\frac{mg}{RL}} \]
+\form#2:$ \sigma_{MAD} = K \cdot \mathop{median_i} \left( \left| X_i - \mathop{median_j} ( X_j ) \right| \right) $
+\form#3:$ K = \Phi^{-1}; \Phi = 0.6745 $
+\form#4:\[ \bm{Y = Z\beta + \epsilon} \]
+\form#5:$ \bm{Y} $
+\form#6:$ \bm{Z} $
+\form#7:$ \bm{\beta} $
+\form#8:$ \bm{\epsilon} $
+\form#9:$ \bm{n} $
+\form#10:$ \bm{r} $
+\form#11:\[ \underbrace{ \left( \begin{array}{c} obs_1 \\ obs_2 \\ \vdots \\ obs_n \end{array} \right) }_{Y} \qquad = \qquad \underbrace{ \left( \begin{array}{cccc} 1 & alt_1 & east_1 & north_1 \\ 1 & alt_2 & east_2 & north_2 \\ \vdots & \vdots & \vdots & \vdots \\ 1 & alt_n & east_n & north_n \end{array} \right) }_{Z} \cdot \underbrace{ \left( \begin{array}{c} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_r \end{array} \right) }_{\beta} + \underbrace{ \left( \begin{array}{c} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n \end{array} \right) }_{\epsilon} \]
+\form#12:$ \bm{\hat{\beta}} $
+\form#13:$ \bm{ \hat{\beta} = (Z^\top Z)^{-1}Z^\top Y} $
+\form#14:$ \bm{ \hat{Y} = Z\hat{\beta} } $
+\form#15:\begin{eqnarray*} \mathbf{\lambda} & = & \mathbf{\Gamma_0^{-1}} \cdot \mathbf{\gamma^*} \\ \left[ \begin{array}{c} \lambda_1 \\ \vdots \\ \lambda_i \\ \mu \end{array} \right] & = & { \left[ \begin{array}{cccc} \Gamma_{1,1} & \cdots & \Gamma_{1,i} & 1 \\ \vdots & \ddots & \vdots & \vdots \\ \Gamma_{i,1} & \cdots & \Gamma_{i,i} & 1 \\ 1 & \cdots & 1 & 0 \end{array} \right] }^{-1} \cdot \left[ \begin{array}{c} \gamma^*_1 \\ \vdots \\ \gamma^*_i \\ 1 \end{array} \right] \end{eqnarray*}
+\form#16:$\lambda_i$
+\form#17:$\mu$
+\form#18:$\Gamma_{i,j}$
+\form#19:$\gamma^*_i$
+\form#20:\[ \mathbf{X^*} = \sum \mathbf{\lambda_i} * \mathbf{X_i} \]
+\form#21:$X_i$
+\form#22:\[ f(x) = \frac 1{b-a} \quad \mathrm{for} \quad a \le x \le b, \]
+\form#23:\[ f(x \mid\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) \quad \mathrm{for} \quad -\infty < x < +\infty \]
+\form#24:\[ f(x)=\frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x} \quad \mathrm{for} \quad x > 0 \]
+\form#25:\[ \alpha > 0, \quad \beta > 0 \]
+\form#26:\[ f_\nu(x)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)} {\sqrt{\nu\pi}~\Gamma\left(\frac{\nu}{2}\right)} \left(1+\frac{x^{2}}{\nu}\right)^{-\frac{\nu+1}{2}} \quad \mathrm{for} \quad -\infty < x < +\infty \]
+\form#27:\[ \nu > 0 \]
+\form#28:\[ Z\sim\mathcal{N}(0,1) \rightarrow Z^2\sim\chi^2(1) \rightarrow Y=\chi^2(r_1)+\ldots+\chi^2(r_\nu)\sim\chi^2(r_1+\ldots+r_\nu) \]
+\form#29:\[ f(x)=\frac{1}{\mathrm{B}(\alpha, \beta)} x^{\alpha-1}(1-x)^{\beta-1} \quad \mathrm{for} \quad 0 < x < 1 \]
+\form#30:\[ f(x|\nu _1, \nu _2) = m^{\frac{\nu _1}{2}} \nu _2^{\frac{\nu _2}{2}} \cdot \frac{\Gamma (\frac{\nu _1}{2}+\frac{\nu _2}{2})}{\Gamma (\frac{\nu _1}{2}) \Gamma(\frac{\nu _2}{2})} \cdot \frac{x^{\frac{\nu _1}{2}-1}} {(\nu _1 x+\nu _2)^\frac{\nu _1+\nu _2}{2}} \quad \mathrm{for} \quad x \geq 0 \]

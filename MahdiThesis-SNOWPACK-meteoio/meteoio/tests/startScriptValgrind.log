@@ -1,0 +1,16 @@
+Run dashboard with model Nightly
+   Source directory: .
+   Build directory: .
+Cannot locate CTest configuration: in BuildDirectory: /home/mjafari/snowpack/bckup-Sep7-2018/AdrienVesrion/meteoio-trunk/CTestConfig.cmake
+Cannot locate CTest configuration: in SourceDirectory: /home/mjafari/snowpack/bckup-Sep7-2018/AdrienVesrion/meteoio-trunk/CTestConfig.cmake
+   Site: olmenhorn
+   Build name: Linux_Standart_Valgrind
+WARNING: No nightly start time found please set in CTestConfig.cmake or DartConfig.cmake
+CMake Error at /home/mjafari/snowpack/bckup-Sep7-2018/AdrienVesrion/meteoio-trunk/tests/startScriptValgrind.cmake:29 (ctest_start):
+  ctest_start unknown error.
+
+
+   Updating the repository: /home/mjafari/snowpack/bckup-Sep7-2018/AdrienVesrion/meteoio-trunk
+   Use SVN repository type
+Current Tag empty, this may mean NightlyStartTime / CTEST_NIGHTLY_START_TIME was not set correctly. Or maybe you forgot to call ctest_start() before calling ctest_configure().
+Cannot open log file
