@@ -1,5 +1,0 @@
-/*topoChangerFvMesh/topoChangerFvMesh.C*/
-
-topBoundaryLayerAdditionRemovalTopoFvMesh.C
-
-LIB = $(FOAM_USER_LIBBIN)/libtopoChangerFvMeshNew

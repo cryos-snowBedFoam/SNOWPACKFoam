@@ -1,3 +1,0 @@
-interface_SNOWPACK.C
-
-LIB = $(FOAM_USER_LIBBIN)/libinterface_SNOWPACK
