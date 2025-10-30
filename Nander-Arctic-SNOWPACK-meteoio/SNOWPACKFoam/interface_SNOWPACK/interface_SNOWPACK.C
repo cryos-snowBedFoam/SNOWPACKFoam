@@ -467,7 +467,6 @@ void dataForCurrentTimeStep(CurrentMeteo& Mdata, SurfaceFluxes& surfFluxes, vect
 		surfFluxes.reset(cumsum_mass);
 		if (useCanopyModel)
 			currentSector.Cdata.reset(cumsum_mass);
-
 		if(!cumsum_mass) {
 			for(auto& station:vecXdata) {
 				station.reset_water_fluxes();
@@ -515,7 +514,6 @@ void dataForCurrentTimeStep(CurrentMeteo& Mdata, SurfaceFluxes& surfFluxes, vect
 	}
 	bool adjust_height_of_wind_value;
 	cfg.getValue("ADJUST_HEIGHT_OF_WIND_VALUE", "SnowpackAdvanced", adjust_height_of_wind_value);
-
 	// Find the Wind Profile Parameters, w/ or w/o canopy; take care of canopy
 	meteo.compMeteo(Mdata, currentSector, true, adjust_height_of_wind_value);
 
@@ -569,7 +567,6 @@ void dataForCurrentTimeStep(CurrentMeteo& Mdata, SurfaceFluxes& surfFluxes, vect
 	}
 }
 
-
 /**
  * @brief determine which outputs need to be done for the current time step
  * @param mn_ctrl timestep control structure
@@ -621,7 +618,7 @@ bool readSlopeMeta(mio::IOManager& io, SnowpackIO& snowpackio, SnowpackConfig& c
 	ss << "SNOWFILE" << i_stn+1;
 	cfg.getValue(ss.str(), "Input", snowfile, mio::IOUtils::nothrow);
 	const bool slope_from_sno = cfg.get("SLOPE_FROM_SNO", "Input", true);
-		
+
 	//Read SSdata for every "slope" referred to as sector where sector 0 corresponds to the main station
 	for (size_t sector=slope.mainStation; sector<slope.nSlopes; sector++) {
 		try {
@@ -635,7 +632,6 @@ bool readSlopeMeta(mio::IOManager& io, SnowpackIO& snowpackio, SnowpackConfig& c
 						((pos_dot != string::npos) && (pos_slash == string::npos))) //so that the dot is not in a directory name
 						snowfile.erase(pos_dot, snowfile.size()-pos_dot);
 				}
-				
 				snowpackio.readSnowCover(snowfile, vecStationIDs[i_stn], vecSSdata[slope.mainStation], sn_Zdata, (vecXdata[sector].Seaice!=NULL));
 				if(Foam::Pstream::master()) prn_msg(__FILE__, __LINE__, "msg-", mio::Date(), "Reading snow cover data for station %s",
 				        vecStationIDs[i_stn].c_str());
@@ -651,6 +647,7 @@ bool readSlopeMeta(mio::IOManager& io, SnowpackIO& snowpackio, SnowpackConfig& c
 					                       + current_date.toString(mio::Date::ISO), AT);
 				Mdata.setMeasTempParameters(vectmpmd[i_stn]);
 
+				//either get the slope metadata from the sno file or from the meteo data
 				if (slope_from_sno) { //position from the meteo forcings, slope and name from the sno file
 					vecSSdata[slope.mainStation].meta.position = vectmpmd[i_stn].meta.position;
 				} else { //all metadata from the meteo forcings
@@ -797,7 +794,7 @@ void addSpecialKeys(SnowpackConfig &cfg)
 		cfg.addKey("HS_A3H::arg1::min_pts", "Filters", "6"); //TODO change # data required to 1
 		cfg.addKey("HS_A3H::arg1::min_span", "Filters", "10740");
 	}
-	
+
 	//warn the user if the precipitation miss proper re-accumulation
 	const bool HS_driven = cfg.get("ENFORCE_MEASURED_SNOW_HEIGHTS", "Snowpack");
 	if (mode != "OPERATIONAL" && !HS_driven) {
@@ -822,7 +819,7 @@ void writeForcing(Date d1, const Date& d2, const double& Tstep, IOManager &io)
 	const std::string experiment = io.getConfig().get("EXPERIMENT", "Output");
 	std::map<std::string, size_t> mapIDs; //over a large time range, the number of stations might change... this is the way to make it work
 	std::vector<MeteoData> Meteo; //we need some intermediate storage, for storing data sets for 1 timestep
-	
+
 	for(; d1<=d2; d1+=Tstep) { //time loop
 		io.getMeteoData(d1, Meteo); //read 1 timestep at once, forcing resampling to the timestep
 		for(size_t ii=0; ii<Meteo.size(); ii++) {
@@ -946,7 +943,7 @@ int SnowpackInterface::init_sn()
 	} else {
 		mio::IOUtils::convertString(dateEnd, end_date_str, i_time_zone);
 	}
-		
+
 	const std::string variant_ = cfg.get("VARIANT", "SnowpackAdvanced"); variant=variant_;
 	const std::string experiment_ = cfg.get("EXPERIMENT", "Output"); experiment=experiment_;
 	const std::string outpath_ = cfg.get("METEOPATH", "Output"); outpath=outpath_;
@@ -954,7 +951,7 @@ int SnowpackInterface::init_sn()
 	const bool useCanopyModel_ = cfg.get("CANOPY", "Snowpack"); useCanopyModel=useCanopyModel_;
 	const double calculation_step_length_ = cfg.get("CALCULATION_STEP_LENGTH", "Snowpack"); calculation_step_length=calculation_step_length_;
 	const double sn_dt_ = M_TO_S(calculation_step_length_); sn_dt= sn_dt_; //Calculation time step in seconds
-	
+
 	nSolutes = Constants::iundefined; // Jafari modified, we already declared it in coupling interface class
 	cfg.getValue("NUMBER_OF_SOLUTES", "Input", nSolutes, mio::IOUtils::nothrow);
 	if (nSolutes > 0) SnowStation::number_of_solutes = static_cast<short unsigned int>(nSolutes);
@@ -1067,7 +1064,7 @@ int SnowpackInterface::init_sn()
 			if (db_name == "sdbo" || db_name == "sdbt")
 				mn_ctrl.sdbDump = true;
 		}
-		
+
 		SunObject sun_copy(vecSSdata[slope.mainStation].meta.position.getLat(), vecSSdata[slope.mainStation].meta.position.getLon(), vecSSdata[slope.mainStation].meta.position.getAltitude()); sun=sun_copy; // Jafari coppied the created object to that we already have in coupling interface class
 		sun.setElevationThresh(0.6);
 		//vector<ProcessDat> qr_Hdata;     //Hazard data for t=0...tn  // Jafari commented, we already have it in coupling interface class
@@ -1087,7 +1084,7 @@ int SnowpackInterface::init_sn()
 		computed_one_timestep = false; // Jafari modified, we already declared it in coupling interface class
 		meteo_step_length = -1.; // Jafari modified, we already declared it in coupling interface class
 		const bool enforce_snow_height_ = cfg.get("ENFORCE_MEASURED_SNOW_HEIGHTS", "Snowpack"); enforce_snow_height=enforce_snow_height_;
-		
+
 		//from current_date to dateEnd, if necessary write out meteo forcing
 		if (write_forcing==true) {
 			writeForcing(current_date, dateEnd, calculation_step_length/1440, io);

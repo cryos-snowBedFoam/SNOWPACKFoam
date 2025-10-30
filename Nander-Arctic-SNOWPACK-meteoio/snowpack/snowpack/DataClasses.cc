@@ -2608,7 +2608,7 @@ void SnowStation::initialize(const SN_SNOWSOIL_DATA& SSdata, const size_t& i_sec
 			// Memories, memories
 			Edata[e].CDot = SSdata.Ldata[ll].CDot;
 			Edata[e].metamo = SSdata.Ldata[ll].metamo;
-			//Edata[e].vapTrans_cumulativeDenChange = SSdata.Ldata[ll].Rho_cum_snow; // Jafari added Rho_cum_snow in case of water vapor transport and ENABLE_VAPOUR_RESTART
+			Edata[e].vapTrans_cumulativeDenChange = SSdata.Ldata[ll].Rho_cum_snow; // Jafari added Rho_cum_snow in case of water vapor transport and ENABLE_VAPOUR_RESTART
 			Edata[e].salinity = SSdata.Ldata[ll].salinity;
 			Edata[e].h = SSdata.Ldata[ll].h;
 			Edata[e].dsm = SSdata.Ldata[ll].dsm;
@@ -2844,6 +2844,7 @@ void SnowStation::splitElement(const size_t& e)
 	Ndata[e+2]=Ndata[e+1];
 	Ndata[e+1].hoar=0.;
 	Ndata[e+1].T=Edata[e].Te;
+	Ndata[e+1].rhov=Edata[e].rhov;
 	// Position the new node correctly in the domain
 	Ndata[e+1].z=(Ndata[e+2].z+Ndata[e].z)/2.;
 	Ndata[e+2].u*=0.5;

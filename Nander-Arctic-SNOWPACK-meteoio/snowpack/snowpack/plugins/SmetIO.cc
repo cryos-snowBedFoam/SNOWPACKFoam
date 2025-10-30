@@ -662,8 +662,8 @@ void SmetIO::writeSnowCover(const mio::Date& date, const SnowStation& Xdata,
 			// >1: Label using timestamp
 			ss << "" << (date.toString(Date::NUM));
 		}
-		//snofilename += ss.str(); //Jafari commented, to only overwrite at each interwal and to only have one file
-		//hazfilename += ss.str(); //Jafari commented, to only overwrite at each interwal and to only have one file
+		//snofilename += ss.str(); //Jafari commented, to only overwrite at each interval and to only have one file
+		//hazfilename += ss.str(); //Jafari commented, to only overwrite at each interval and to only have one file
 	}
 
 	writeSnoFile(snofilename, date, Xdata, Zdata, enable_pref_flow, enable_ice_reservoir);

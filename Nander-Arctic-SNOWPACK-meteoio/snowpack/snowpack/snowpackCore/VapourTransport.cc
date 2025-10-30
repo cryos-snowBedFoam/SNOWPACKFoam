@@ -118,6 +118,13 @@ VapourTransport::VapourTransport(const SnowpackConfig& cfg)
 			waterVaporTransport_timeStep = sn_dt;
 		}
 	}
+	//vapour transport model
+	cfg.getValue("VAPOUR_TRANSPORT_MODEL", "SnowpackAdvanced", vapour_transport_model);
+	if(!(vapour_transport_model =="diffusion_SNOWPACK" || vapour_transport_model =="convection_OpenFOAM"))
+	{
+		throw IOException("VAPOUR_TRANSPORT_MODEL must be diffusion_SNOWPACK or convection_OpenFOAM or NONE", AT);
+	}
+
 
 	// Water transport model snow
 	cfg.getValue("WATERTRANSPORTMODEL_SNOW", "SnowpackAdvanced", watertransportmodel_snow);
@@ -171,6 +178,7 @@ void VapourTransport::compTransportMass(const CurrentMeteo& Mdata, double& ql,
 	
 	// First, check the vapour_transport_model
 	if (vapour_transport_model !="diffusion_SNOWPACK") {
+		
 		return;
 	}
 		//std::cout << " I am ... convection_OpenFOAM \n";
@@ -180,6 +188,7 @@ void VapourTransport::compTransportMass(const CurrentMeteo& Mdata, double& ql,
 	}
 
 	try {
+		//std::cout << "YA MAHHHHHHHHHHHHHHHHHHDI" << std::endl;
 		LayerToLayer(Mdata, Xdata, Sdata, ql);
 		WaterTransport::adjustDensity(Xdata, Sdata);
 		WaterTransport::mergingElements(Xdata, Sdata);
