@@ -1,80 +1,159 @@
-This is a guide for how to compile SNOWPACKFoam to model convection of water vapor in snowpacks as introduced in the paper of
-"Simulating the effect of natural convection in a tundra snow cover" as https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/
+# SNOWPACKFoam: Modeling Convection of Water Vapor in Snowpacks
 
-by Mahdi Jafari, 2025, mahdijafari.135@gmail.com 
+This repository provides the source code and setup instructions for **SNOWPACKFoam**, a coupled model for simulating the **convection of water vapor in snowpacks** as introduced in:
 
----------------------------------------------------
-1) first, we need to install OpenFOAM-5-x as:
+> *Jafari, M. (2025). Simulating the effect of natural convection in a tundra snow cover.*
+> [EGUsphere Preprint](https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/)
+> Contact: [mahdijafari.135@gmail.com](mailto:mahdijafari.135@gmail.com)
 
+---
+
+## 1. Install OpenFOAM-5.x
+
+Clone and build OpenFOAM-5.x and its ThirdParty dependencies:
+
+```bash
 cd ~
 mkdir OpenFOAM
 cd OpenFOAM
+
 git clone https://github.com/OpenFOAM/OpenFOAM-5.x.git
 git clone https://github.com/OpenFOAM/ThirdParty-5.x.git
 
 cd ~/OpenFOAM/ThirdParty-5.x
 ./Allwmake
+
 cd ~/OpenFOAM/OpenFOAM-5.x
 ./Allwmake
+```
 
+---
 
-2) We need to intall first meteio as library used in SNOWPACK. We assume the intsall directory is as $HOME/localInst then:
+## 2. Install MeteoIO
 
-    cd meteoio
-    mkdir build
-    cd build 
-    cmake ../.
+SNOWPACKFoam depends on **MeteoIO**, a meteorological data library used by SNOWPACK.
 
-    we need to install ccmae and then we do as:
-   
-    ccmake .
-    
-    In the tab/window opened, we press the "t" for advanced options and then we set the installation path of CMAKE_INSTALL_PREFIX to $HOME/localInst.
-    Then, we prees "c" and then as:
+Assuming the installation directory is `$HOME/localInst`:
 
-    make install -j 8
-   
-    This will install meteoio in $HOME/localInst.
+```bash
+cd meteoio
+mkdir build && cd build
+cmake ../.
+```
 
-3) We need to intall first meteio as library used in SNOWPACK. We assume the intsall directory is as $HOME/localInst then:
+Use the CMake GUI for configuration:
 
-    cd meteoio
-    mkdir build
-    cd build 
-    cmake ../.
+```bash
+ccmake .
+```
 
-    we need to install ccmae and then we do as:
-   
-    ccmake .
-    
-    In the tab/window opened, we press the "t" for advanced options and then we set the installation path of CMAKE_INSTALL_PREFIX to $HOME/localInst.
-    Then, we prees "c" and then as:
+Then:
 
-    make install -j 8
-   
-    This will install meteoio in $HOME/localInst.
+* Press `t` to show advanced options.
+* Set `CMAKE_INSTALL_PREFIX` to `$HOME/localInst`.
+* Press `c` (configure), then `g` (generate).
 
+Finally, compile and install:
 
-   wmake libso
+```bash
+make install -j8
+```
 
-    cd src/frontTracking/meshTools
-    wclean
-    wmake libso
+This installs MeteoIO into `$HOME/localInst`.
 
-    cd src/frontTracking/TurbulenceModelsNew
-    ./Allwclean
-    ./Allwmake
+---
 
-    cd src/frontTracking/intermediateFT
-    wclean
-    wmake libso
+## 3. Install SNOWPACK
 
+Similarly, compile and install SNOWPACK:
 
-    cd applications/interDyFTFoam 
-    wclean
-    wmake
-    
-4) to run the example case, 
+```bash
+cd snowpack
+mkdir build && cd build
+cmake ../.
+ccmake .
+```
 
+In `ccmake`, set the following:
 
-./Allrun and ./Allclean can be used.
+* `CMAKE_INSTALL_PREFIX` → `$HOME/localInst`
+* `DEBUG_ARITHM` → `OFF`
+* `METEOIO_INCLUDE_DIR` → `$HOME/localInst/include`
+* `METEOIO_LIBRARY` → `$HOME/localInst/lib/libmeteoio.so`
+
+Then build and install:
+
+```bash
+make install -j8
+```
+
+This installs SNOWPACK in `$HOME/localInst`.
+
+---
+
+## 4. Compile SNOWPACKFoam
+
+Now compile the coupled solver:
+
+```bash
+cd SNOWPACKFoam
+./Allwclean
+./Allwmake
+```
+
+The `Allwmake` script compiles the following modules sequentially:
+
+```bash
+wmake $targetType interface_SNOWPACK
+wmake $targetType topBoundaryLayerAdditionRemovalTopoFvMesh1
+wmake $targetType
+```
+
+---
+
+## 5. Run the Example Case
+
+Navigate to the example case directory:
+
+```bash
+cd run-SNOWPACKFoam/BYL-tundra-2014-2015-noHet-drift
+```
+
+Folder structure:
+
+```
+├── 0
+├── addingDensityDiffToSNPC.py
+├── Allclean
+├── Allrunp
+├── Allrunpc
+├── Allruns
+├── constant
+├── extracting.py
+├── foam.foam
+├── SNOWPACK
+├── system
+```
+
+This case is ready to run using:
+
+```bash
+./Allrunp
+```
+
+The `SNOWPACK` subfolder contains the necessary input data for SNOWPACK simulations.
+
+---
+
+### Citation
+
+If you use **SNOWPACKFoam** in your research, please cite:
+
+> Jafari, M. (2025). *Simulating the effect of natural convection in a tundra snow cover.* EGUsphere Preprint, 2025-3035.
+> [https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/](https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/)
+
+---
+
+**Author:** Dr. Mahdi Jafari
+**Email:** [mahdijafari.135@gmail.com](mailto:mahdijafari.135@gmail.com)
+**Year:** 2025
