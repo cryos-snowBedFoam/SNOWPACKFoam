@@ -1,9 +1,96 @@
+# ===============================
+
+# SNOWPACKFoam Git Ignore File
+
+# Author: Mahdi Jafari
+
+# ===============================
+
+# --- CMake and Make artifacts ---
+
 CMakeFiles/
-#*.cmake
-MakeFile
-lib/
-install_manifest.txt
 CMakeCache.txt
+Makefile
+install_manifest.txt
+cmake_install.cmake
+*.cmake
+*.a
+*.so
+*.o
+*.obj
+*.mod
+*.dll
+*.exe
+*.out
+*.log
+
+# --- IDE and system junk ---
+
 .DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# --- OpenFOAM build directories ---
+
+*/linux64GccDPInt32Opt/
+*/lnInclude/
+*/linux64GccDPInt32Debug/
+*/platforms/
+
+# --- Local libraries and executables ---
+
+lib/
+bin/
+include/
+*.dep
+
+# --- MeteoIO and SNOWPACK build directories ---
+
+meteoio/build/
+snowpack/build/
+
+# --- Temporary / test / scratch files ---
+
+tmp/
+temp/
+test/
+*.bak
+*.old
+*.tmp
+*.tar
+*.gz
+*.zip
+
+# --- Backup and system specific files ---
+
+*.kate-swp
+*.vscode/
+*.idea/
+
+# --- Ignore specific source file not meant to commit ---
+
 Source/meteoio/meteoio/IOHandler.cc
-# TEMP TEST
+
+# --- Ignore hidden or generated metadata ---
+
+*.pyc
+**pycache**/
+.jupyter/
+.ipynb_checkpoints/
+
+# --- Logs or runtime output ---
+
+log/
+logs/
+*.log
+*.err
+*.dat
+*.csv
+*.txt~
+
+# --- Optional local installation directories ---
+
+localInst/
+build/
