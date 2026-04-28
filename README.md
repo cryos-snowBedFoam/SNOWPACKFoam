@@ -2,9 +2,7 @@
 
 This repository provides the source code and setup instructions for **SNOWPACKFoam**, a coupled model for simulating the **convection of water vapor in snowpacks** as introduced in:
 
-> *Jafari, M. (2025). Simulating the effect of natural convection in a tundra snow cover.*
-> [EGUsphere Preprint](https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/)
-> Contact: [mahdijafari.135@gmail.com](mailto:mahdijafari.135@gmail.com)
+> Jafari, M. and Lehning, M.: Simulating the effect of natural convection in a tundra snow cover, The Cryosphere, 20, 2439–2467, https://doi.org/10.5194/tc-20-2439-2026, 2026.
 
 ---
 
@@ -149,11 +147,10 @@ The `SNOWPACK` subfolder contains the necessary input data for SNOWPACK simulati
 
 If you use **SNOWPACKFoam** in your research, please cite:
 
-> Jafari, M. (2025). *Simulating the effect of natural convection in a tundra snow cover.* EGUsphere Preprint, 2025-3035.
-> [https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/](https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3035/)
+> Jafari, M. and Lehning, M.: Simulating the effect of natural convection in a tundra snow cover, The Cryosphere, 20, 2439–2467, https://doi.org/10.5194/tc-20-2439-2026, 2026.
 
 ---
 
 **Author:** Dr. Mahdi Jafari
 **Email:** [mahdijafari.135@gmail.com](mailto:mahdijafari.135@gmail.com)
-**Year:** 2025
+**Year:** 2025-2026
