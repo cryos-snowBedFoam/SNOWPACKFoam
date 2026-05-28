@@ -1056,8 +1056,9 @@ int SnowpackInterface::init_sn()
 		memset(&mn_ctrl, 0, sizeof(MainControl));
 		if (mode == "RESEARCH") {
 			mn_ctrl.resFirstDump = true; //HACK to dump the initial state in research mode
-			deleteOldOutputFiles(outpath, experiment, vecStationIDs[i_stn], slope.nSlopes, snowpackio.getExtensions());
-			cfg.write(outpath + "/" + vecStationIDs[i_stn] + "_" + experiment + ".ini"); //output config
+		    if(Foam::Pstream::master()) deleteOldOutputFiles(outpath, experiment, vecStationIDs[i_stn], slope.nSlopes, snowpackio.getExtensions()); //Océane added
+			if(Foam::Pstream::master()) cfg.write(outpath + "/" + vecStationIDs[i_stn] + "_" + experiment + ".ini"); //output config //Océane added
+
 			if (!restart) current_date -= calculation_step_length/(24.*60.);
 		} else {
 			const std::string db_name = cfg.get("DBNAME", "Output", "");
@@ -1087,7 +1088,7 @@ int SnowpackInterface::init_sn()
 
 		//from current_date to dateEnd, if necessary write out meteo forcing
 		if (write_forcing==true) {
-			writeForcing(current_date, dateEnd, calculation_step_length/1440, io);
+			if(Foam::Pstream::master()) writeForcing(current_date, dateEnd, calculation_step_length/1440, io); //Océane added
 			write_forcing = false; //no need to call it again for the other stations
 		}
 		
@@ -1393,7 +1394,7 @@ bool SnowpackInterface::nextStep() // Jafari added...true means continue for the
 					// Operational mode ONLY: dump snow depth discrepancy time counter
 					vecXdata[slope.mainStation].TimeCountDeltaHS = time_count_deltaHS;
 				}
-				snowpackio.writeSnowCover(current_date, vecXdata[sector], sn_Zdata);
+				if(Foam::Pstream::master()) snowpackio.writeSnowCover(current_date, vecXdata[sector], sn_Zdata); //Océane added
 				if (sector == slope.mainStation) {
 					if(Foam::Pstream::master()) prn_msg(__FILE__, __LINE__, "msg", mio::Date(),
 							"Writing data to sno file(s) for %s (station %s) on %s",

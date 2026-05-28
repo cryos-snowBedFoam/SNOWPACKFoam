@@ -201,8 +201,8 @@ class SnowpackInterface : public addSpecialKeyToCfg {
 		vector<ProcessInd> qr_Hdata_ind;//
 		double duration ;
 		int counter;
-		Hazard* haz;//
-		Hazard hazard=*haz;//
+		//Hazard* haz;// //Océane deleted - haz was never assigned; dereferencing it is UB and causes SIGSEGV on non-master ranks
+		Hazard hazard{cfg, 1.0};// //Océane modified - was =*haz; use dummy duration>0, properly replaced by Hazard(cfg,duration) in init_sn()
 		bool computed_one_timestep;//
 		double meteo_step_length;//
 		bool enforce_snow_height;//
